@@ -5,6 +5,7 @@ import UsersService from './users.service';
 import User from './users.entity';
 import Account from '../account/accounts.entity';
 import { AccountsModule } from '../account/accounts.module';
+import { AuthenticationModule } from 'src/auth/auth.module';
 
 @Module({
   imports: [TypeOrmModule.forFeature([User, Account]), AccountsModule],

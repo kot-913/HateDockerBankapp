@@ -9,7 +9,7 @@ export default class Account {
   @Column()
   accountNumber: string;
 
-  @Column({ type: 'decimal', default: 100.5 })
+  @Column({ type: 'decimal', default: 168.5 })
   amount: number;
 
   @OneToOne(() => User)

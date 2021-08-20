@@ -27,7 +27,7 @@ export default class User {
   @Column({ nullable: true })
   avatar: string;
 
-  // @OneToOne(() => Account, { eager: true, cascade: true })
-  // @JoinColumn()
-  // account: string;
+  @OneToOne(() => Account, { eager: true, cascade: true })
+  @JoinColumn()
+  account: Account;
 }

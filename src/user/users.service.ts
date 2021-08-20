@@ -1,6 +1,7 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import CreateUserDto from './dto/create-user.dto';
 import User from './users.entity';
+import { hash } from 'bcrypt';
 import Account from '../account/accounts.entity';
 import UpdateUserDto from './dto/update-user.dto';
 import { Repository } from 'typeorm';
@@ -27,24 +28,34 @@ export default class UsersService {
     throw new HttpException('User not found', HttpStatus.NOT_FOUND);
   }
 
-  // getRandomIntInclusive(min: number, max: number) {
-  //   const randomBuffer = new Uint32Array(1);
-  //   window.crypto.getRandomValues(randomBuffer);
-  //   let randomNumber = randomBuffer[0] / (0xffffffff + 1);
-  //   min = Math.ceil(min);
-  //   max = Math.floor(max);
-  //   return Math.floor(randomNumber * (max - min + 1)) + min;
-  // }
+  async getUserByEmail(email: string) {
+    const user = await this.usersRepository.findOne({ email });
+    if (user) {
+      return user;
+    }
+    throw new HttpException('User with this email does not exist', HttpStatus.NOT_FOUND);
+  }
+
+  getRandomAccountNumber(max: number, min: number){
+    let accountNumber = '';
+    for (let i=0; i<4; i++){
+  accountNumber += `${Math.floor(Math.random() * (max-min) + min)} `;
+}
+  return accountNumber; 
+  }
+
   async createUser(user: CreateUserDto) {
     try{    
-      const newAccount = this.accountsRepository.create({
-      //  account: this.getRandomIntInclusive(10, 100),
+      const account = this.accountsRepository.create({
+       accountNumber: this.getRandomAccountNumber( 9999, 1000 ),
       });
+      const hashedPassword = await hash(user.password, 10)
       const newUser = this.usersRepository.create({
         ...user,
-        // newAccount,
+        account,
+        password: hashedPassword,
       })  
-      await this.usersRepository.save(user);
+      await this.usersRepository.save(newUser);
       return newUser;
      } catch (error){
        console.log(error);

@@ -1,9 +1,12 @@
+import { AccountsModule } from './account/accounts.module';
 import { Module } from '@nestjs/common';
+import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { AuthenticationModule } from './auth/auth.module';
 import { UsersModule } from './user/users.module';
-import { ConfigModule } from '@nestjs/config';
+import { MonetaryTransactionModule } from './monetaryTransaction/monetaryTransaction.module';
 
 @Module({
   imports: [
@@ -19,6 +22,9 @@ import { ConfigModule } from '@nestjs/config';
       synchronize: true,
     }),
     UsersModule,
+    AuthenticationModule,
+    MonetaryTransactionModule,
+    AccountsModule
   ],
   controllers: [AppController],
   providers: [AppService],

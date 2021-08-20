@@ -1,34 +1,35 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
-  import { InjectRepository } from '@nestjs/typeorm';
-  import { Repository } from 'typeorm/repository/Repository';
-  import Account from './accounts.entity';
+import Account from './accounts.entity';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm/repository/Repository';
   
-  @Injectable()
-  export default class AccountsService {
-    constructor(
-      @InjectRepository(Account)
-      private accountsRepository: Repository<Account>
+  
+@Injectable()
+export default class AccountsService {
+  constructor(
+    @InjectRepository(Account)
+    private accountsRepository: Repository<Account>
     ) {}
   
-    async getAccountByNumber(accountNumber: string) {
-      const account = this.accountsRepository.findOne({
-        where: { accountNumber }
-      });
+  async getAccountByNumber(accountNumber: string) {
+    const account = this.accountsRepository.findOne({
+      where: { accountNumber }
+    });
   
-      if (!account) { 
-          throw new HttpException('User not found', HttpStatus.NOT_FOUND);
+    if (!account) { 
+        throw new HttpException('Account not found', HttpStatus.NOT_FOUND);
       }
-      return account;
+    return account;
     }
   
-    async modifyAccountBalance(account: Account, amount: number) {
-      try {
-        return await this.accountsRepository.save({
-          ...account,
-          amount
-        });
-      } catch (e) {
-        throw new HttpException('User not found', HttpStatus.INTERNAL_SERVER_ERROR);
-      }
+  async onChangeAccountBalance(account: Account, amount: number) {
+    try {
+      return await this.accountsRepository.save({
+        ...account,
+        amount
+      });
+    } catch (e) {
+      throw new HttpException('User not found', HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
+}

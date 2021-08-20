@@ -9,7 +9,8 @@ import { parse, join } from  'path';
 
 @Controller('users')
 export default class UsersController {
-  constructor(private readonly usersService: UsersService) {}
+  constructor(private readonly usersService: UsersService
+    ) {}
 
   @Get()
   getAllUsers() {
@@ -19,11 +20,6 @@ export default class UsersController {
   @Get(':id')
   getUserById(@Param('id') id: string) {
     return this.usersService.getUserById(Number(id));
-  }
-
-  @Post()
-  async createUser(@Body() user: CreateUserDto) {
-    return this.usersService.createUser(user);
   }
 
   @Put(':id')

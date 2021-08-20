@@ -1,4 +1,4 @@
-class CreatePostDto {
+class CreateUserDto {
   email: string;
   login: string;
   firstName: string;
@@ -7,4 +7,4 @@ class CreatePostDto {
   dateOfBirth: Date;
 }
 
-export default CreatePostDto;
+export default CreateUserDto;
