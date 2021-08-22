@@ -1,7 +1,7 @@
 export enum TransactionStatus {
     CREATED = 'CREATED',
     PENDING = 'PENDING',
-    DECLINED = 'DECLINED',
-    CANCELED = 'CANCELED',
+    DECLINED = 'DECLINED',//to do
+    CANCELED = 'CANCELED',//to do db changes 
     COMPLETE = 'COMPLETE',
   }

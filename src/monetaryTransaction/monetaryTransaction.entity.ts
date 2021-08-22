@@ -7,7 +7,7 @@ export class MonetaryTransaction {
   id: number;
 
   @Column({ default: 'No description' })
-  description: string;
+  description?: string;
 
   @Column()
   amount: number;
@@ -19,8 +19,8 @@ export class MonetaryTransaction {
   accountBeneficiary: string;
 
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
-  date: Date;
+  date?: Date;
 
   @Column({ default: TransactionStatus.CREATED })
-  status: TransactionStatus;
+  status?: TransactionStatus;
 }

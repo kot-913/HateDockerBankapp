@@ -1,7 +1,9 @@
 import {
     Body,
     Controller,
+    Delete,
     Get,
+    Param,
     Post,
     Req,
     Res,
@@ -12,6 +14,7 @@ import {
   import { Parser } from 'json2csv';
   import { MonetaryTransactionService } from './MonetaryTransaction.service';
   import { CreateTransactionDto } from './dto/create-monetaryTransaction.dto';
+import { UpdateTransactionDto } from './dto/update-monetaryTransaction.dto';
   
   @Controller('transactions')
   export class MonetaryTransactionController {
@@ -78,6 +81,16 @@ import {
         user.account.accountNumber,
         Number(params.transactionId),
       );
+    }
+
+    @Post('/stop')
+    @UseGuards(JwtAuthenticationGuard)
+    async cancelTransaction(
+      @Req() request: UserRequest,
+      @Body() updateTransactionDto: UpdateTransactionDto
+    ) {
+      const { id } = request.user.account;
+      this.monetaryTransactionService.cancelTransaction(id, updateTransactionDto);
     }
   }
   

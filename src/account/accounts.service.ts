@@ -12,10 +12,10 @@ export default class AccountsService {
     ) {}
   
   async getAccountByNumber(accountNumber: string) {
-    const account = this.accountsRepository.findOne({
+    const account = await this.accountsRepository.findOne({
       where: { accountNumber }
     });
-  
+
     if (!account) { 
         throw new HttpException('Account not found', HttpStatus.NOT_FOUND);
       }
